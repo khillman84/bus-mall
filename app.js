@@ -4,6 +4,9 @@
 var images = [];
 var objects = [];
 var divOne = document.getElementById('image-one');
+var divTwo = document.getElementById('image-two');
+var divThree = document.getElementById('image-three');
+var threeNumbers = [];
 
 // object constructor
 function Items (name, timesShown, timesClicked, id){
@@ -80,9 +83,22 @@ var bag = new Items('bag', 0, 0, 'Bag');
 objects.push(bag);
 console.log(objects);
 
-// listener elements
-images[].onload = function () {
-  divOne.appendChild(images[17]);
+// loop to show three random pictures
+for (var i = 0; i < 3; i++) {
+  var randomNumber = Math.floor(Math.random() * 20);
+  threeNumbers.push(randomNumber);
+}
+
+images[0].onload = function () {
+  divOne.appendChild(images[threeNumbers[0]]);
 };
+images[1].onload = function () {
+  divTwo.appendChild(images[threeNumbers[1]]);
+};
+images[2].onload = function () {
+  divThree.appendChild(images[threeNumbers[2]]);
+};
+
+console.log(threeNumbers);
 
 console.log(images);
