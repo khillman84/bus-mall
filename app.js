@@ -15,15 +15,15 @@ function Items (name, path, timesShown, timesClicked){
 };
 
 // global functions
-function randomNumber() {
+function randomNumber() { //generate a random number
   var random = Math.floor(Math.random() * objects.length);
   console.log(random);
   return random;
 }
 
-function displayPics() {
+function displayPics() {  //display three images to index.html
   var left = new Image();
-  left.setAttribute('class', 'picture');
+  left.setAttribute('id', 'pictureOne');
   var leftIndex = randomNumber();
   var leftProduct = objects[leftIndex];
   left.src = leftProduct.path;
@@ -37,7 +37,7 @@ function displayPics() {
   }
 
   var center = new Image();
-  center.setAttribute('class', 'picture');
+  center.setAttribute('id', 'pictureTwo');
   var centerProduct = objects[centerIndex];
   center.src = centerProduct.path;
   center.alt = centerProduct.name;
@@ -50,7 +50,7 @@ function displayPics() {
   }
 
   var right = new Image();
-  right.setAttribute('class', 'picture');
+  right.setAttribute('id', 'pictureThree');
   var rightProduct = objects[rightIndex];
   right.src = rightProduct.path;
   right.alt = rightProduct.name;
@@ -58,8 +58,33 @@ function displayPics() {
   divThree.appendChild(right);
 }
 
-function RemovePics() {
-  
+function removePics() { //remove the currently displayed pictures
+  var elRemove = document.getElementById('pictureOne');
+  elRemove.parentNode.removeChild(elRemove);
+  var elRemoveTwo = document.getElementById('pictureTwo');
+  elRemoveTwo.parentNode.removeChild(elRemoveTwo);
+  var elRemoveThree = document.getElementById('pictureThree');
+  elRemoveThree.parentNode.removeChild(elRemoveThree);
+}
+
+function groupFunctions() {
+  displayPics();
+  console.log(objects);
+  var elRefreshOne = document.getElementById('pictureOne');
+  elRefreshOne.addEventListener('click', function() {
+    removePics();
+    groupFunctions();
+  }, false);
+  var elRefreshTwo = document.getElementById('pictureTwo');
+  elRefreshTwo.addEventListener('click', function() {
+    removePics();
+    groupFunctions();
+  }, false);
+  var elRefreshThree = document.getElementById('pictureThree');
+  elRefreshThree.addEventListener('click', function() {
+    removePics();
+    groupFunctions();
+  }, false);
 }
 
 // objects
@@ -104,13 +129,7 @@ objects.push(waterCan);
 var wineGlass = new Items ('wine-glass', 'img/wine-glass.jpg', 0, 0);
 objects.push(wineGlass);
 
-displayPics();
-console.log(objects);
+// run functions
+groupFunctions();
 
 // event listeners
-var elRefresh = document.getElementsByClassName('picture');
-for (var i = 0; i < elRefresh.length; i++) {
-  elRefresh[i].addEventListener('click', function() {
-    displayPics();
-  }, false);
-};
