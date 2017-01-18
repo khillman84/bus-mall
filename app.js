@@ -6,11 +6,6 @@ var divOne = document.getElementById('image-one');
 var divTwo = document.getElementById('image-two');
 var divThree = document.getElementById('image-three');
 
-function randomNumber() {
-  var random = Math.floor(Math.random() * objects.length);
-  console.log(random);
-  return random;
-}
 // object constructor
 function Items (name, path, timesShown, timesClicked){
   this.name = name;
@@ -19,8 +14,16 @@ function Items (name, path, timesShown, timesClicked){
   this.timesClicked = timesClicked;
 };
 
+// global functions
+function randomNumber() {
+  var random = Math.floor(Math.random() * objects.length);
+  console.log(random);
+  return random;
+}
+
 function displayPics() {
   var left = new Image();
+  left.setAttribute('class', 'picture');
   var leftIndex = randomNumber();
   var leftProduct = objects[leftIndex];
   left.src = leftProduct.path;
@@ -34,6 +37,7 @@ function displayPics() {
   }
 
   var center = new Image();
+  center.setAttribute('class', 'picture');
   var centerProduct = objects[centerIndex];
   center.src = centerProduct.path;
   center.alt = centerProduct.name;
@@ -46,11 +50,16 @@ function displayPics() {
   }
 
   var right = new Image();
+  right.setAttribute('class', 'picture');
   var rightProduct = objects[rightIndex];
   right.src = rightProduct.path;
   right.alt = rightProduct.name;
   rightProduct.timesShown += 1;
   divThree.appendChild(right);
+}
+
+function RemovePics() {
+  
 }
 
 // objects
@@ -97,3 +106,11 @@ objects.push(wineGlass);
 
 displayPics();
 console.log(objects);
+
+// event listeners
+var elRefresh = document.getElementsByClassName('picture');
+for (var i = 0; i < elRefresh.length; i++) {
+  elRefresh[i].addEventListener('click', function() {
+    displayPics();
+  }, false);
+};
