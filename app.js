@@ -71,6 +71,22 @@ function removePics() { //remove the currently displayed pictures
   elRemoveThree.parentNode.removeChild(elRemoveThree);
 }
 
+function final(){
+  removePics();
+  var totalShown = document.getElementById('total-shown');
+  for (var i = 0; i < objects.length; i++){
+    var listItem = document.createElement('li');
+    listItem.textContent = objects[i].name + ' was shown ' + objects[i].timesShown;
+    totalShown.appendChild(listItem);
+  }
+  var totalShown = document.getElementById('total-clicked');
+  for (var i = 0; i < objects.length; i++){
+    var listItem = document.createElement('li');
+    listItem.textContent = objects[i].name + ' was clicked ' + objects[i].timesClicked;
+    totalShown.appendChild(listItem);
+  }
+}
+
 function groupFunctions() {
   displayPics();
   console.log(objects);
@@ -93,7 +109,7 @@ function groupFunctions() {
     groupFunctions();
   }, false);
   rounds++;
-  if (rounds < 6) {
+  if (rounds < 21) {
     console.log('Round number: ' + rounds);
   } else {
     final();
