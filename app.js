@@ -9,6 +9,7 @@ var rounds = 0;
 var leftProduct;
 var centerProduct;
 var rightProduct;
+var chartData = []; //display the vote totals
 
 // object constructor
 function Items (name, path){
@@ -74,6 +75,7 @@ function removePics() { //remove the currently displayed pictures
 function final(){
   removePics();
   displayPics();
+  // displayChart();
 }
 
 function groupFunctions() {
@@ -82,7 +84,6 @@ function groupFunctions() {
   var elRefreshOne = document.getElementById('pictureOne');
   elRefreshOne.addEventListener('click', function() {
     leftProduct.timesClicked++;
-    chartNames.push(leftProduct.name);
     chartData.push(leftProduct.timesClicked);
     removePics();
     groupFunctions();
@@ -90,7 +91,6 @@ function groupFunctions() {
   var elRefreshTwo = document.getElementById('pictureTwo');
   elRefreshTwo.addEventListener('click', function() {
     centerProduct.timesClicked++;
-    chartNames.push(centerProduct.name);
     chartData.push(centerProduct.timesClicked);
     removePics();
     groupFunctions();
@@ -98,7 +98,6 @@ function groupFunctions() {
   var elRefreshThree = document.getElementById('pictureThree');
   elRefreshThree.addEventListener('click', function() {
     rightProduct.timesClicked++;
-    chartNames.push(rightProduct.name);
     chartData.push(rightProduct.timesClicked);
     removePics();
     groupFunctions();
@@ -109,9 +108,38 @@ function groupFunctions() {
   } else {
     final();
     console.log(chartNames);
-    console.log(chartData)
+    console.log(chartData);
+    var context = document.getElementById('chart').getContext('2d');
+    var chartInfo = chartData; //display the vote totals
+    var chartNames = ['Bag', 'Banana', 'Bathroom', 'Boots', 'Breakfast', 'Bubblegum', 'Chair', 'Cthulhu', 'Dog Duck', 'Dragon', 'Pen', 'Pet Sweep', 'Scissors', 'Shark', 'Sweep', 'Tauntaun', 'Unicorn', 'USB', 'Water Can', 'Wine Glass'];
+    var chartColors = ['blue', 'red', 'yellow', 'orange', 'green', 'blue', 'red', 'yellow', 'green', 'blue', 'red', 'yellow', 'orange', 'green', 'blue', 'red', 'yellow', 'green', 'blue', 'red']; //turn this into object names
+    var chartOptions = {
+      responsive: false,
+      scales:{
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    };
+
+    var myChart = new Chart(context, {
+      type: 'bar',
+      data: {
+        labels: chartNames,
+        datasets: [{
+          label: 'Number of votes',
+          data: chartData,
+          backgroundColor: chartColors
+        }]
+      },
+      options: chartOptions
+    });
   }
 }
+
+// function displayChart() {
 
 // objects
 objects.push(new Items ('bag', 'img/bag.jpg'));
@@ -136,33 +164,5 @@ objects.push(new Items ('water-can', 'img/water-can.jpg'));
 objects.push(new Items ('wine-glass', 'img/wine-glass.jpg'));
 
 // run functions
+// displayPics();
 groupFunctions();
-
-// chart construct
-var context = document.getElementById('chart').getContext('2d');
-var chartData = []; //display the vote totals
-var chartNames = []; //turn this into object names
-var chartColors = ['blue', 'red', 'yellow', 'orange', 'green', 'blue', 'red', 'yellow', 'green']; //turn this into object names
-var chartOptions = {
-  responsive: false,
-  scales:{
-    yAxes: [{
-      ticks: {
-        beginAtZero: true
-      }
-    }]
-  }
-};
-
-var myChart = new Chart(context, {
-  type: 'bar',
-  data: {
-    labels: chartNames,
-    datasets: [{
-      label: 'Number of votes',
-      data: chartData,
-      backgroundColor: chartColors
-    }]
-  },
-  options: chartOptions
-});
