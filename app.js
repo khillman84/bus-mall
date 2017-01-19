@@ -9,6 +9,7 @@ var rounds = 0;
 var leftProduct;
 var centerProduct;
 var rightProduct;
+var chartData = []; //display the vote totals
 
 // object constructor
 function Items (name, path){
@@ -71,30 +72,10 @@ function removePics() { //remove the currently displayed pictures
   elRemoveThree.parentNode.removeChild(elRemoveThree);
 }
 
-function keepPics() { //remove the currently displayed pictures
-  var elRemove = document.getElementById('pictureOne');
-  elRemove.removeEventListener('click', function() {}, false);
-  var elRemoveTwo = document.getElementById('pictureTwo');
-  elRemoveTwo.removeEventListener('click', function() {}, false);
-  var elRemoveThree = document.getElementById('pictureThree');
-  elRemoveThree.removeEventListener('click', function() {}, false);
-}
-
 function final(){
-  keepPics();
-  // var totalShown = document.getElementById('total-shown');
-  // for (var i = 0; i < objects.length; i++){
-  //   var listItem = document.createElement('li');
-  //   listItem.textContent = objects[i].name + ' was shown ' + objects[i].timesShown;
-  //   totalShown.appendChild(listItem);
-  // }
-  // var totalShown = document.getElementById('total-clicked');
-  // for (var i = 0; i < objects.length; i++){
-  //   var listItem = document.createElement('li');
-  //   listItem.textContent = objects[i].name + ' was clicked ' + objects[i].timesClicked;
-  //   totalShown.appendChild(listItem);
-  // }
-
+  removePics();
+  displayPics();
+  // displayChart();
 }
 
 function groupFunctions() {
@@ -103,7 +84,6 @@ function groupFunctions() {
   var elRefreshOne = document.getElementById('pictureOne');
   elRefreshOne.addEventListener('click', function() {
     leftProduct.timesClicked++;
-    chartNames.push(leftProduct.name);
     chartData.push(leftProduct.timesClicked);
     removePics();
     groupFunctions();
@@ -111,7 +91,6 @@ function groupFunctions() {
   var elRefreshTwo = document.getElementById('pictureTwo');
   elRefreshTwo.addEventListener('click', function() {
     centerProduct.timesClicked++;
-    chartNames.push(centerProduct.name);
     chartData.push(centerProduct.timesClicked);
     removePics();
     groupFunctions();
@@ -119,19 +98,48 @@ function groupFunctions() {
   var elRefreshThree = document.getElementById('pictureThree');
   elRefreshThree.addEventListener('click', function() {
     rightProduct.timesClicked++;
-    chartNames.push(rightProduct.name);
     chartData.push(rightProduct.timesClicked);
     removePics();
     groupFunctions();
   }, false);
   rounds++;
-  if (rounds < 5) {
+  if (rounds < 26) {
     console.log('Round number: ' + rounds);
   } else {
     final();
     console.log(chartNames);
+    console.log(chartData);
+    var context = document.getElementById('chart').getContext('2d');
+    var chartInfo = chartData; //display the vote totals
+    var chartNames = ['Bag', 'Banana', 'Bathroom', 'Boots', 'Breakfast', 'Bubblegum', 'Chair', 'Cthulhu', 'Dog Duck', 'Dragon', 'Pen', 'Pet Sweep', 'Scissors', 'Shark', 'Sweep', 'Tauntaun', 'Unicorn', 'USB', 'Water Can', 'Wine Glass'];
+    var chartColors = ['blue', 'red', 'yellow', 'orange', 'green', 'blue', 'red', 'yellow', 'green', 'blue', 'red', 'yellow', 'orange', 'green', 'blue', 'red', 'yellow', 'green', 'blue', 'red']; //turn this into object names
+    var chartOptions = {
+      responsive: false,
+      scales:{
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    };
+
+    var myChart = new Chart(context, {
+      type: 'bar',
+      data: {
+        labels: chartNames,
+        datasets: [{
+          label: 'Number of votes',
+          data: chartData,
+          backgroundColor: chartColors
+        }]
+      },
+      options: chartOptions
+    });
   }
 }
+
+// function displayChart() {
 
 // objects
 objects.push(new Items ('bag', 'img/bag.jpg'));
@@ -156,34 +164,5 @@ objects.push(new Items ('water-can', 'img/water-can.jpg'));
 objects.push(new Items ('wine-glass', 'img/wine-glass.jpg'));
 
 // run functions
+// displayPics();
 groupFunctions();
-myChart;
-
-// chart construct
-var context = document.getElementById('chart').getContext('2d');
-var chartData = []; //display the vote totals
-var chartNames = ['hi']; //turn this into object names
-var chartColors = ['blue', 'red', 'yellow', 'orange', 'green', 'blue', 'red', 'yellow', 'green']; //turn this into object names
-var chartOptions = {
-  responsive: false,
-  scales:{
-    yAxes: [{
-      ticks: {
-        beginAtZero: true
-      }
-    }]
-  }
-};
-
-var myChart = new Chart(context, {
-  type: 'bar',
-  data: {
-    labels: chartNames,
-    datasets: [{
-      label: 'Number of votes',
-      data: chartData,
-      backgroundColor: chartColors
-    }]
-  },
-  options: chartOptions
-});
