@@ -11,11 +11,11 @@ var centerProduct;
 var rightProduct;
 
 // object constructor
-function Items (name, path, timesShown, timesClicked){
+function Items (name, path){
   this.name = name;
   this.path = path;
-  this.timesShown = timesShown;
-  this.timesClicked = timesClicked;
+  this.timesShown = 0;
+  this.timesClicked = 0;
 };
 
 // global functions
@@ -109,7 +109,7 @@ function groupFunctions() {
     groupFunctions();
   }, false);
   rounds++;
-  if (rounds < 21) {
+  if (rounds < 26) {
     console.log('Round number: ' + rounds);
   } else {
     final();
@@ -117,26 +117,26 @@ function groupFunctions() {
 }
 
 // objects
-objects.push(new Items ('bag', 'img/bag.jpg', 0, 0));
-objects.push(new Items ('banana', 'img/banana.jpg', 0, 0));
-objects.push(new Items ('bathroom', 'img/bathroom.jpg', 0, 0));
-objects.push(new Items ('boots', 'img/boots.jpg', 0, 0));
-objects.push(new Items ('breakfast', 'img/breakfast.jpg', 0, 0));
-objects.push(new Items ('bubblegum', 'img/bubblegum.jpg', 0, 0));
-objects.push(new Items ('chair', 'img/chair.jpg', 0, 0));
-objects.push(new Items ('cthulhu', 'img/cthulhu.jpg', 0, 0));
-objects.push(new Items ('dog-duck', 'img/dog-duck.jpg', 0, 0));
-objects.push(new Items ('dragon', 'img/dragon.jpg', 0, 0));
-objects.push(new Items ('pen', 'img/pen.jpg', 0, 0));
-objects.push(new Items ('pet-sweep', 'img/pet-sweep.jpg', 0, 0));
-objects.push(new Items ('scissors', 'img/scissors.jpg', 0, 0));
-objects.push(new Items ('shark', 'img/shark.jpg', 0, 0));
-objects.push(new Items ('sweep', 'img/sweep.png', 0, 0));
-objects.push(new Items ('tauntaun', 'img/tauntaun.jpg', 0, 0));
-objects.push(new Items ('unicorn', 'img/unicorn.jpg', 0, 0));
-objects.push(new Items ('usb', 'img/usb.gif', 0, 0));
-objects.push(new Items ('water-can', 'img/water-can.jpg', 0, 0));
-objects.push(new Items ('wine-glass', 'img/wine-glass.jpg', 0, 0));
+objects.push(new Items ('bag', 'img/bag.jpg'));
+objects.push(new Items ('banana', 'img/banana.jpg'));
+objects.push(new Items ('bathroom', 'img/bathroom.jpg'));
+objects.push(new Items ('boots', 'img/boots.jpg'));
+objects.push(new Items ('breakfast', 'img/breakfast.jpg'));
+objects.push(new Items ('bubblegum', 'img/bubblegum.jpg'));
+objects.push(new Items ('chair', 'img/chair.jpg'));
+objects.push(new Items ('cthulhu', 'img/cthulhu.jpg'));
+objects.push(new Items ('dog-duck', 'img/dog-duck.jpg'));
+objects.push(new Items ('dragon', 'img/dragon.jpg'));
+objects.push(new Items ('pen', 'img/pen.jpg'));
+objects.push(new Items ('pet-sweep', 'img/pet-sweep.jpg'));
+objects.push(new Items ('scissors', 'img/scissors.jpg'));
+objects.push(new Items ('shark', 'img/shark.jpg'));
+objects.push(new Items ('sweep', 'img/sweep.png'));
+objects.push(new Items ('tauntaun', 'img/tauntaun.jpg'));
+objects.push(new Items ('unicorn', 'img/unicorn.jpg'));
+objects.push(new Items ('usb', 'img/usb.gif'));
+objects.push(new Items ('water-can', 'img/water-can.jpg'));
+objects.push(new Items ('wine-glass', 'img/wine-glass.jpg'));
 
 // run functions
 groupFunctions();
