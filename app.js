@@ -71,20 +71,30 @@ function removePics() { //remove the currently displayed pictures
   elRemoveThree.parentNode.removeChild(elRemoveThree);
 }
 
+function keepPics() { //remove the currently displayed pictures
+  var elRemove = document.getElementById('pictureOne');
+  elRemove.removeEventListener('click', function() {}, false);
+  var elRemoveTwo = document.getElementById('pictureTwo');
+  elRemoveTwo.removeEventListener('click', function() {}, false);
+  var elRemoveThree = document.getElementById('pictureThree');
+  elRemoveThree.removeEventListener('click', function() {}, false);
+}
+
 function final(){
-  removePics();
-  var totalShown = document.getElementById('total-shown');
-  for (var i = 0; i < objects.length; i++){
-    var listItem = document.createElement('li');
-    listItem.textContent = objects[i].name + ' was shown ' + objects[i].timesShown;
-    totalShown.appendChild(listItem);
-  }
-  var totalShown = document.getElementById('total-clicked');
-  for (var i = 0; i < objects.length; i++){
-    var listItem = document.createElement('li');
-    listItem.textContent = objects[i].name + ' was clicked ' + objects[i].timesClicked;
-    totalShown.appendChild(listItem);
-  }
+  keepPics();
+  // var totalShown = document.getElementById('total-shown');
+  // for (var i = 0; i < objects.length; i++){
+  //   var listItem = document.createElement('li');
+  //   listItem.textContent = objects[i].name + ' was shown ' + objects[i].timesShown;
+  //   totalShown.appendChild(listItem);
+  // }
+  // var totalShown = document.getElementById('total-clicked');
+  // for (var i = 0; i < objects.length; i++){
+  //   var listItem = document.createElement('li');
+  //   listItem.textContent = objects[i].name + ' was clicked ' + objects[i].timesClicked;
+  //   totalShown.appendChild(listItem);
+  // }
+
 }
 
 function groupFunctions() {
@@ -93,26 +103,33 @@ function groupFunctions() {
   var elRefreshOne = document.getElementById('pictureOne');
   elRefreshOne.addEventListener('click', function() {
     leftProduct.timesClicked++;
+    chartNames.push(leftProduct.name);
+    chartData.push(leftProduct.timesClicked);
     removePics();
     groupFunctions();
   }, false);
   var elRefreshTwo = document.getElementById('pictureTwo');
   elRefreshTwo.addEventListener('click', function() {
     centerProduct.timesClicked++;
+    chartNames.push(centerProduct.name);
+    chartData.push(centerProduct.timesClicked);
     removePics();
     groupFunctions();
   }, false);
   var elRefreshThree = document.getElementById('pictureThree');
   elRefreshThree.addEventListener('click', function() {
     rightProduct.timesClicked++;
+    chartNames.push(rightProduct.name);
+    chartData.push(rightProduct.timesClicked);
     removePics();
     groupFunctions();
   }, false);
   rounds++;
-  if (rounds < 26) {
+  if (rounds < 5) {
     console.log('Round number: ' + rounds);
   } else {
     final();
+    console.log(chartNames);
   }
 }
 
@@ -140,3 +157,33 @@ objects.push(new Items ('wine-glass', 'img/wine-glass.jpg'));
 
 // run functions
 groupFunctions();
+myChart;
+
+// chart construct
+var context = document.getElementById('chart').getContext('2d');
+var chartData = []; //display the vote totals
+var chartNames = ['hi']; //turn this into object names
+var chartColors = ['blue', 'red', 'yellow', 'orange', 'green', 'blue', 'red', 'yellow', 'green']; //turn this into object names
+var chartOptions = {
+  responsive: false,
+  scales:{
+    yAxes: [{
+      ticks: {
+        beginAtZero: true
+      }
+    }]
+  }
+};
+
+var myChart = new Chart(context, {
+  type: 'bar',
+  data: {
+    labels: chartNames,
+    datasets: [{
+      label: 'Number of votes',
+      data: chartData,
+      backgroundColor: chartColors
+    }]
+  },
+  options: chartOptions
+});
