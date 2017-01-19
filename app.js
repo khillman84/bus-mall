@@ -71,30 +71,9 @@ function removePics() { //remove the currently displayed pictures
   elRemoveThree.parentNode.removeChild(elRemoveThree);
 }
 
-function keepPics() { //remove the currently displayed pictures
-  var elRemove = document.getElementById('pictureOne');
-  elRemove.removeEventListener('click', function() {}, false);
-  var elRemoveTwo = document.getElementById('pictureTwo');
-  elRemoveTwo.removeEventListener('click', function() {}, false);
-  var elRemoveThree = document.getElementById('pictureThree');
-  elRemoveThree.removeEventListener('click', function() {}, false);
-}
-
 function final(){
-  keepPics();
-  // var totalShown = document.getElementById('total-shown');
-  // for (var i = 0; i < objects.length; i++){
-  //   var listItem = document.createElement('li');
-  //   listItem.textContent = objects[i].name + ' was shown ' + objects[i].timesShown;
-  //   totalShown.appendChild(listItem);
-  // }
-  // var totalShown = document.getElementById('total-clicked');
-  // for (var i = 0; i < objects.length; i++){
-  //   var listItem = document.createElement('li');
-  //   listItem.textContent = objects[i].name + ' was clicked ' + objects[i].timesClicked;
-  //   totalShown.appendChild(listItem);
-  // }
-
+  removePics();
+  displayPics();
 }
 
 function groupFunctions() {
@@ -125,11 +104,12 @@ function groupFunctions() {
     groupFunctions();
   }, false);
   rounds++;
-  if (rounds < 5) {
+  if (rounds < 26) {
     console.log('Round number: ' + rounds);
   } else {
     final();
     console.log(chartNames);
+    console.log(chartData)
   }
 }
 
@@ -157,12 +137,11 @@ objects.push(new Items ('wine-glass', 'img/wine-glass.jpg'));
 
 // run functions
 groupFunctions();
-myChart;
 
 // chart construct
 var context = document.getElementById('chart').getContext('2d');
 var chartData = []; //display the vote totals
-var chartNames = ['hi']; //turn this into object names
+var chartNames = []; //turn this into object names
 var chartColors = ['blue', 'red', 'yellow', 'orange', 'green', 'blue', 'red', 'yellow', 'green']; //turn this into object names
 var chartOptions = {
   responsive: false,
