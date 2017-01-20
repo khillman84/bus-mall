@@ -10,6 +10,7 @@ var leftProduct;
 var centerProduct;
 var rightProduct;
 var chartData = []; //display the vote totals
+var dataName = JSON.parse(localStorage.newItem);
 
 // object constructor
 function Items (name, path){
@@ -17,6 +18,16 @@ function Items (name, path){
   this.path = path;
   this.timesShown = 0;
   this.timesClicked = 0;
+};
+
+function Storage (name, clicked){
+  this.name = name;
+  this.clicked = clicked;
+};
+
+//methods
+Storage.prototype.persistToLocalStorage = function() {
+  localStorage.newItem = JSON.stringify(this);
 };
 
 // global functions
@@ -72,10 +83,14 @@ function removePics() { //remove the currently displayed pictures
   elRemoveThree.parentNode.removeChild(elRemoveThree);
 }
 
+function getInfo(){
+  this.persistToLocalStorage();
+}
+
 function final(){
   removePics();
   displayPics();
-  // displayChart();
+  getInfo();
 }
 
 function groupFunctions() {
@@ -85,6 +100,10 @@ function groupFunctions() {
   elRefreshOne.addEventListener('click', function() {
     leftProduct.timesClicked++;
     chartData.push(leftProduct.timesClicked);
+    var name = leftProduct.name;
+    var clicked = leftProduct.timesClicked;
+    var newItem = new Storage(name, clicked);
+    newItem.persistToLocalStorage();
     removePics();
     groupFunctions();
   }, false);
@@ -139,8 +158,6 @@ function groupFunctions() {
   }
 }
 
-// function displayChart() {
-
 // objects
 objects.push(new Items ('bag', 'img/bag.jpg'));
 objects.push(new Items ('banana', 'img/banana.jpg'));
@@ -164,5 +181,4 @@ objects.push(new Items ('water-can', 'img/water-can.jpg'));
 objects.push(new Items ('wine-glass', 'img/wine-glass.jpg'));
 
 // run functions
-// displayPics();
 groupFunctions();
