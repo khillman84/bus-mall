@@ -20,8 +20,7 @@ function Items (name, path){
   this.timesClicked = 0;
 };
 
-function Storage (name, clicked){
-  this.name = name;
+function Storage (clicked){
   this.clicked = clicked;
 };
 
@@ -83,14 +82,9 @@ function removePics() { //remove the currently displayed pictures
   elRemoveThree.parentNode.removeChild(elRemoveThree);
 }
 
-function getInfo(){
-  this.persistToLocalStorage();
-}
-
 function final(){
   removePics();
   displayPics();
-  getInfo();
 }
 
 function groupFunctions() {
@@ -100,10 +94,10 @@ function groupFunctions() {
   elRefreshOne.addEventListener('click', function() {
     leftProduct.timesClicked++;
     chartData.push(leftProduct.timesClicked);
-    var name = leftProduct.name;
-    var clicked = leftProduct.timesClicked;
-    var newItem = new Storage(name, clicked);
-    newItem.persistToLocalStorage();
+    // var name = leftProduct.name;
+    // var clicked = leftProduct.timesClicked;
+    // var newItem = new Storage(name, clicked);
+    // newItem.persistToLocalStorage();
     removePics();
     groupFunctions();
   }, false);
@@ -126,6 +120,9 @@ function groupFunctions() {
     console.log('Round number: ' + rounds);
   } else {
     final();
+    var newItem = new Storage(chartData);
+    newItem.persistToLocalStorage();
+    console.log(newItem);
     console.log(chartNames);
     console.log(chartData);
     var context = document.getElementById('chart').getContext('2d');
@@ -148,7 +145,7 @@ function groupFunctions() {
       data: {
         labels: chartNames,
         datasets: [{
-          label: 'Number of votes',
+          label: 'Results',
           data: chartData,
           backgroundColor: chartColors
         }]
